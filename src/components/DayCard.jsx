@@ -11,7 +11,7 @@ export const DayCard = () => {
       <Title>Fri</Title>
       <Title>41 °33°</Title>
       <Logo src={sun} />
-      <Title>41 °33°</Title>
+      <Title>Clear</Title>
     </Box>
   );
 };
