@@ -8,7 +8,7 @@ import cloudy from "../assets/cloudy.png";
 import rain from "../assets/rainy.png";
 import { SunInfo } from "./SunInfo";
 
-export const ChartsMain = ({ dayTemp }) => {
+export const ChartsMain = ({ dayTemp, current }) => {
   const temp = useSelector((store) => store.temp);
   useEffect(() => {}, [temp]);
 
@@ -37,7 +37,7 @@ export const ChartsMain = ({ dayTemp }) => {
         </Box>
         <RenderChart />
 
-        <SunInfo />
+        <SunInfo current={current} />
       </Wrapper>
     )
   );

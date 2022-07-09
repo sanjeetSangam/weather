@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { ImLocation, ImSearch } from "react-icons/im";
 import axios from "axios";
 import { cities } from "../data/Cities";
 import { CityList } from "./CityList";
+import { Coordinates } from "../logic/defaultLocation";
 
-export const Search = ({ city, setCity, setCoordinates }) => {
+export const Search = ({ setCoordinates, coordinates, setLoading }) => {
   const [searchData, setSearchData] = useState([]);
+  const [city, setCity] = useState("");
   const [show, setShow] = useState(true);
   let keyWeather = import.meta.env.VITE_API_KEY;
   let id;
@@ -45,6 +47,7 @@ export const Search = ({ city, setCity, setCoordinates }) => {
         .then(({ data }) => {
           const obj = { lat: data.coord.lat, lng: data.coord.lon };
           setCoordinates(obj);
+          setCity(data.name);
         })
         .catch((err) => console.log(err));
     }
@@ -59,15 +62,35 @@ export const Search = ({ city, setCity, setCoordinates }) => {
       .then(({ data }) => {
         const obj = { lat: data.coord.lat, lng: data.coord.lon };
         setCoordinates(obj);
+        setCity(data.name);
       })
       .catch((err) => console.log(err));
     setShow(false);
   };
 
+  useEffect(() => {
+    setLoading(true);
+    if (coordinates.lat !== undefined) {
+      axios
+        .get(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.lat}&lon=${coordinates.lng}&appid=${keyWeather}`
+        )
+        .then(({ data }) => {
+          setCity(data.name);
+          setLoading(false);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [coordinates]);
+
+  const currentLocation = () => {
+    Coordinates(setCoordinates);
+  };
+
   return (
     <Container>
       <Form onSubmit={getWeather}>
-        <Item style={{ cursor: "pointer" }}>
+        <Item style={{ cursor: "pointer" }} onClick={currentLocation}>
           <ImLocation />
         </Item>
         <Input
@@ -104,8 +127,6 @@ export const Search = ({ city, setCity, setCoordinates }) => {
     </Container>
   );
 };
-
-// show ? "cityList active" : "cityList"
 
 const Container = styled.div`
   .cityList {

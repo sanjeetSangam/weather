@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ChartsMain } from "../components/Charts";
@@ -6,45 +5,49 @@ import { Days } from "../components/Days";
 import { Search } from "../components/Search";
 import { Coordinates } from "../logic/defaultLocation";
 
+import loader from "../assets/loader.gif";
+
 export const Home = () => {
   const [coordinates, setCoordinates] = useState({});
-  const [city, setCity] = useState("");
   const [dayTemp, setDayTemp] = useState({});
-  const [data, setData] = useState({});
-  let keyWeather = import.meta.env.VITE_API_KEY;
+  const [current, setCurrent] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     Coordinates(setCoordinates);
   }, []);
 
-  useEffect(() => {
-    if (coordinates.lat !== null) {
-      axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.lat}&lon=${coordinates.lng}&appid=${keyWeather}`
-        )
-        .then(({ data }) => {
-          setCity(data.name);
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [coordinates]);
-
   return (
     <Container>
-      <Search city={city} setCity={setCity} setCoordinates={setCoordinates} />
-      <Days
+      <Search
+        setLoading={setLoading}
+        setCoordinates={setCoordinates}
         coordinates={coordinates}
-        dayTemp={dayTemp}
-        setDayTemp={setDayTemp}
       />
-      <ChartsMain dayTemp={dayTemp} />
+
+      {loading ? (
+        <Box>
+          <Image src={loader} />
+        </Box>
+      ) : (
+        <Wrapper>
+          <Days
+            coordinates={coordinates}
+            dayTemp={dayTemp}
+            setDayTemp={setDayTemp}
+            setCurrent={setCurrent}
+          />
+
+          <ChartsMain dayTemp={dayTemp} current={current} />
+        </Wrapper>
+      )}
     </Container>
   );
 };
 
 const Container = styled.div`
   max-width: 500px;
+  min-width: 500px;
   background: white;
   max-height: 95vh;
   border-radius: 0.5rem;
@@ -58,4 +61,14 @@ const Container = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const Wrapper = styled.div``;
+
+const Box = styled.div`
+  width: 500px;
+`;
+
+const Image = styled.img`
+  width: 500px;
 `;

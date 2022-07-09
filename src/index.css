@@ -12,4 +12,5 @@ body {
   overflow: hidden;
   display: grid;
   place-items: center;
+  overflow: hidden;
 }

@@ -45,13 +45,14 @@ const Box = styled.div`
   flex-direction: column;
   gap: 0.5rem;
   align-items: center;
-  color: #324355;
   min-width: max-content;
   cursor: pointer;
-  border: 2px solid #e9e9e9;
+  transition: 0.3s;
 
-  :focus-within {
-    border: 2px solid #00a6fa;
+  :hover {
+    background: #0d5e7e;
+    border-radius: 0.5rem;
+    color: #ffff;
   }
 `;
 
