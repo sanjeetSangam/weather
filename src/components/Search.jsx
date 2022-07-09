@@ -3,13 +3,20 @@ import styled from "styled-components";
 
 import { ImLocation, ImSearch } from "react-icons/im";
 
-export const Search = () => {
+export const Search = ({ city, setCity }) => {
+  const getWeather = (e) => {
+    e.preventDefault();
+  };
   return (
-    <Form>
+    <Form onSubmit={getWeather}>
       <Item>
         <ImLocation />
       </Item>
-      <Input placeholder="Search" />
+      <Input
+        placeholder="Search"
+        value={city}
+        onChange={(e) => setCity(e.target.value)}
+      />
 
       <Item>
         <ImSearch />

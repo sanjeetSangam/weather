@@ -1,17 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import sun from "../assets/sun.png";
 import cloudy from "../assets/cloudy.png";
 import rain from "../assets/rainy.png";
+import { useEffect } from "react";
 
-export const DayCard = () => {
+export const DayCard = ({ dayData }) => {
+  const [dayName, setDayName] = useState("");
+
+  useEffect(() => {
+    // day logic
+    let timeZ = dayData.dt;
+    let day = new Date(timeZ * 1000);
+    var options = { weekday: "long" };
+    const din = new Intl.DateTimeFormat("en-US", options).format(day);
+    setDayName(din);
+  }, [dayData]);
+
   return (
     <Box>
-      <Title>Fri</Title>
-      <Title>41 °33°</Title>
-      <Logo src={sun} />
-      <Title>Clear</Title>
+      <Title>{dayName}</Title>
+      <Title>
+        {Math.round(dayData.temp.max - 273)}°{" "}
+        {Math.round(dayData.temp.min - 273)}°
+      </Title>
+      <Logo
+        src={
+          dayData.weather[0].main === "Clear"
+            ? sun
+            : dayData.weather[0].main === "Clouds"
+            ? cloudy
+            : rain
+        }
+      />
+      <Title>{dayData.weather[0].main}</Title>
     </Box>
   );
 };
