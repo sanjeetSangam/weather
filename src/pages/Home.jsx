@@ -28,6 +28,12 @@ export const Home = () => {
       {loading ? (
         <Box>
           <Image src={loader} />
+          <Title>No City! Turn on the loaction</Title>
+        </Box>
+      ) : !coordinates.lat ? (
+        <Box>
+          <Image src={loader} />
+          <Title>No City! Turn on the loaction</Title>
         </Box>
       ) : (
         <Wrapper>
@@ -66,9 +72,15 @@ const Container = styled.div`
 const Wrapper = styled.div``;
 
 const Box = styled.div`
-  width: 500px;
+  width: 100%;
 `;
 
 const Image = styled.img`
-  width: 500px;
+  width: 100%;
+`;
+
+const Title = styled.h2`
+  color: black;
+  text-align: center;
+  padding: 0.5rem;
 `;
