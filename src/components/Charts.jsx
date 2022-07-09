@@ -6,6 +6,7 @@ import styled from "styled-components";
 import sun from "../assets/sun.png";
 import cloudy from "../assets/cloudy.png";
 import rain from "../assets/rainy.png";
+import { SunInfo } from "./SunInfo";
 
 export const ChartsMain = ({ dayTemp }) => {
   const temp = useSelector((store) => store.temp);
@@ -35,6 +36,8 @@ export const ChartsMain = ({ dayTemp }) => {
           />
         </Box>
         <RenderChart />
+
+        <SunInfo />
       </Wrapper>
     )
   );
@@ -45,6 +48,8 @@ const Wrapper = styled.div`
   padding: 0.5rem 0.8rem;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Box = styled.div`

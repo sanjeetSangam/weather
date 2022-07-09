@@ -11,7 +11,7 @@ export const Home = () => {
   const [city, setCity] = useState("");
   const [dayTemp, setDayTemp] = useState({});
   const [data, setData] = useState({});
-  let keyWeather = "4f9b36e869c7131975a9c2395cf59c46";
+  let keyWeather = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     Coordinates(setCoordinates);
@@ -32,7 +32,7 @@ export const Home = () => {
 
   return (
     <Container>
-      <Search city={city} setCity={setCity} />
+      <Search city={city} setCity={setCity} setCoordinates={setCoordinates} />
       <Days
         coordinates={coordinates}
         dayTemp={dayTemp}
@@ -46,7 +46,7 @@ export const Home = () => {
 const Container = styled.div`
   max-width: 500px;
   background: white;
-  height: 95vh;
+  max-height: 95vh;
   border-radius: 0.5rem;
   padding: 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;

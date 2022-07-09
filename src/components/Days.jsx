@@ -8,13 +8,13 @@ import { addTemp } from "../redux/action";
 
 export const Days = ({ coordinates, setDayTemp }) => {
   const [weeklyData, setWeeklyData] = useState([]);
-
   const dispatch = useDispatch();
+  let keyWeather = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     axios
       .get(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lng}&appid=4f9b36e869c7131975a9c2395cf59c46`
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lng}&appid=${keyWeather}`
       )
       .then(({ data }) => {
         setWeeklyData(data.daily);
