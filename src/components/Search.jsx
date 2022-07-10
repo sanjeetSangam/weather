@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { ImLocation, ImSearch } from "react-icons/im";
 import axios from "axios";
 import { cities } from "../data/Cities";
@@ -13,6 +14,15 @@ export const Search = ({ setCoordinates, coordinates, setLoading }) => {
   const [show, setShow] = useState(true);
   let keyWeather = import.meta.env.VITE_API_KEY;
   let id;
+
+  // error css
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 5000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
+  };
 
   const handleChange = (e) => {
     setShow(true);
@@ -49,7 +59,9 @@ export const Search = ({ setCoordinates, coordinates, setLoading }) => {
           setCoordinates(obj);
           setCity(data.name);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          toast.error(err.response.data.message.toUpperCase(), toastOptions);
+        });
     }
     setShow(false);
   };
@@ -64,7 +76,9 @@ export const Search = ({ setCoordinates, coordinates, setLoading }) => {
         setCoordinates(obj);
         setCity(data.name);
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>
+        toast.error(err.response.data.message.toUpperCase(), toastOptions)
+      );
     setShow(false);
   };
 
@@ -124,6 +138,7 @@ export const Search = ({ setCoordinates, coordinates, setLoading }) => {
           </div>
         </div>
       )}
+      <ToastContainer />
     </Container>
   );
 };

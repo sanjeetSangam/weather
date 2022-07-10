@@ -50,6 +50,7 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  margin-top: 0.5rem;
 `;
 
 const Box = styled.div`
@@ -64,8 +65,8 @@ const Title = styled.h1`
 `;
 
 const Logo = styled.img`
-  height: 30px;
-  width: 30px;
+  height: 3rem;
+  width: 3rem;
 `;
 
 class Charts extends Component {

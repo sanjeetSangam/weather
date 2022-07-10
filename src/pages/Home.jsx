@@ -4,7 +4,6 @@ import { ChartsMain } from "../components/Charts";
 import { Days } from "../components/Days";
 import { Search } from "../components/Search";
 import { Coordinates } from "../logic/defaultLocation";
-
 import loader from "../assets/loader.gif";
 
 export const Home = () => {
@@ -18,44 +17,45 @@ export const Home = () => {
   }, []);
 
   return (
-    <Container>
-      <Search
-        setLoading={setLoading}
-        setCoordinates={setCoordinates}
-        coordinates={coordinates}
-      />
+    <>
+      <Container>
+        <Search
+          setLoading={setLoading}
+          setCoordinates={setCoordinates}
+          coordinates={coordinates}
+        />
 
-      {loading ? (
-        <Box>
-          <Image src={loader} />
-          <Title>No City! Turn on the loaction</Title>
-        </Box>
-      ) : !coordinates.lat ? (
-        <Box>
-          <Image src={loader} />
-          <Title>No City! Turn on the loaction</Title>
-        </Box>
-      ) : (
-        <Wrapper>
-          <Days
-            coordinates={coordinates}
-            dayTemp={dayTemp}
-            setDayTemp={setDayTemp}
-            setCurrent={setCurrent}
-          />
+        {loading ? (
+          <Box>
+            <Image src={loader} />
+            <Title>No City! Turn on the loaction</Title>
+          </Box>
+        ) : !coordinates.lat ? (
+          <Box>
+            <Image src={loader} />
+            <Title>No City! Turn on the loaction</Title>
+          </Box>
+        ) : (
+          <Wrapper>
+            <Days
+              coordinates={coordinates}
+              dayTemp={dayTemp}
+              setDayTemp={setDayTemp}
+              setCurrent={setCurrent}
+            />
 
-          <ChartsMain dayTemp={dayTemp} current={current} />
-        </Wrapper>
-      )}
-    </Container>
+            <ChartsMain dayTemp={dayTemp} current={current} />
+          </Wrapper>
+        )}
+      </Container>
+    </>
   );
 };
 
 const Container = styled.div`
-  max-width: 500px;
-  min-width: 500px;
+  max-width: 100%;
+  min-width: 100%;
   background: white;
-  max-height: 95vh;
   border-radius: 0.5rem;
   padding: 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -63,9 +63,12 @@ const Container = styled.div`
   flex-direction: column;
   gap: 0.5rem;
   overflow-y: auto;
+  max-height: 95vh;
+  overflow-y: auto;
 
-  ::-webkit-scrollbar {
-    display: none;
+  @media screen and (max-width: 600px) {
+    border-radius: 0;
+    min-height: 100vh;
   }
 `;
 
