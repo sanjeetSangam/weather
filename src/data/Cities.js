@@ -1,3 +1,5 @@
+// data for cities for implementing debouncing
+
 export const cities = [
   { name: "Mumbai", state: "Maharashtra", lat: "18.975", lon: "72.825833" },
   { name: "Delhi", state: "Delhi", lat: "28.666667", lon: "77.216667" },
